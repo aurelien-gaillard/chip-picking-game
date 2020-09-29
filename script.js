@@ -1,6 +1,5 @@
 class Game {
     constructor () {
-        this.nbChips = 0
         this.score = 0
     }
     addChip(value, x, y) {
