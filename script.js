@@ -3,10 +3,11 @@ class Game {
         this.score = 0
     }
     addChip(value, x, y) {
+        const main = document.querySelector('main')
         let chip = new Chip(value, x, y)
-        chip.render()
+        chip.mount(main)
     }
-    updateScore() {
+    update() {
         const h1 = document.querySelector('h1')
         h1.textContent = 'Score: '+this.score
     }
@@ -16,7 +17,7 @@ class Game {
             element.remove()
         });
         this.score = 0
-        this.updateScore()
+        this.update()
         for (let i=0 ; i<10 ; i++) {
             const value = Math.ceil(Math.random()*3)
             const x = Math.random()*(innerWidth-100)
@@ -33,7 +34,6 @@ class Chip {
         this.y = y
     }
     render() {
-        const main = document.querySelector('main')
         const chip = document.createElement('div')
         if (this.value === 1) { 
             chip.className = 'chip chip--1'
@@ -49,10 +49,14 @@ class Chip {
         chip.textContent = this.value
         chip.addEventListener('click', () => {
             game.score += this.value 
-            game.updateScore()
+            game.update()
             chip.remove()
         })
-        main.appendChild(chip)
+        return chip
+    }
+    mount(parent) {
+        this.element = this.render()
+        parent.appendChild(this.element)
     }
 }
 
